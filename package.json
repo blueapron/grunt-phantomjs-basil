@@ -1,7 +1,7 @@
 {
   "name": "grunt-phantomjs-basil",
   "description": "Grunt PhantomJS task with extended options with the use of PhantomCSS. Some code used from https://github.com/gruntjs/grunt-lib-phantomjs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "Blueapron Engineering",
     "url": "https://www.blueapron.com"

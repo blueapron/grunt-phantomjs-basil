@@ -151,7 +151,7 @@ webpage.onResourceRequested = function(requestData, networkRequest) {
     var match = requestData.url.match(regex);
 
     if (!match) {
-      networkRequest.cancel();
+      networkRequest.abort();
     }
   }
 
