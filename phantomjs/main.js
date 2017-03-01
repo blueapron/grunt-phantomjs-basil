@@ -58,6 +58,10 @@ sendMessage('private', 'version', phantom.version);
 // Create PhantomJS webpage
 var webpage = require('webpage').create(options.webpage);
 
+// onResourceRequested block third party script
+if (options.onResourceRequested) {
+  webpage.onResourceRequested = options.onResourceRequested;
+}
 
 // Viewport Option
 if(options.viewportSize) {
