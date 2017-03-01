@@ -58,11 +58,6 @@ sendMessage('private', 'version', phantom.version);
 // Create PhantomJS webpage
 var webpage = require('webpage').create(options.webpage);
 
-// onResourceRequested block third party script
-if (options.onResourceRequested) {
-  webpage.onResourceRequested = options.onResourceRequested;
-}
-
 // Viewport Option
 if(options.viewportSize) {
   webpage.viewportSize = options.viewportSize;
@@ -147,10 +142,16 @@ webpage.onConsoleMessage = function(message) {
   }
 };
 
-// For debugging.
-webpage.onResourceRequested = function(request) {
-  sendMessage('onResourceRequested', request);
-};
+
+// onResourceRequested block third party script
+if (options.onResourceRequested) {
+  webpage.onResourceRequested = options.onResourceRequested;
+} else {
+  // For debugging.
+  webpage.onResourceRequested = function(request) {
+    sendMessage('onResourceRequested', request);
+  };
+}
 
 webpage.onResourceReceived = function(request) {
   if (request.stage === 'end') {
