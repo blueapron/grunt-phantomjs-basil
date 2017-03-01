@@ -144,14 +144,20 @@ webpage.onConsoleMessage = function(message) {
 
 
 // onResourceRequested block third party script
-if (options.onResourceRequested) {
-  webpage.onResourceRequested = options.onResourceRequested;
-} else {
-  // For debugging.
-  webpage.onResourceRequested = function(request) {
-    sendMessage('onResourceRequested', request);
-  };
+webpage.onResourceRequested = function(requestData, networkRequest) {
+  if (options.blockExternalRequest) {
+    var whitelist = ['localhost', '0.0.0.0', '127.0.0.1', 'blueapron.com', 'data:image/svg+xml'].join('|');
+    var regex = new RegExp(whitelist, 'i');
+    var match = requestData.url.match(regex);
+
+    if (!match) {
+      networkRequest.cancel();
+    }
+  }
+
+  sendMessage('onResourceRequested', requestData);
 }
+
 
 webpage.onResourceReceived = function(request) {
   if (request.stage === 'end') {
